@@ -1,16 +1,21 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { defineConfig } from 'vite';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [svelte()],
   build: {
-    outDir: 'dist',
     rollupOptions: {
+      input: {
+        popup: resolve(__dirname, 'popup.html'),
+        content: resolve(__dirname, 'src/content.js'),
+        background: resolve(__dirname, 'src/background.js')
+      },
       output: {
-        entryFileNames: `assets/[name].js`,
-        chunkFileNames: `assets/[name].js`,
-        assetFileNames: `assets/[name].[ext]`
+        entryFileNames: 'src/[name].js',
+        chunkFileNames: 'src/chunks/[name].js',
+        assetFileNames: 'assets/[name].[ext]'
       }
     }
   }
-})
+}); 
